@@ -54,7 +54,7 @@ export const YouTubeForm = () => {
     register,
     control,
     handleSubmit,
-    formState: { errors, isDirty, touchedFields, dirtyFields },
+    formState: { errors, isDirty,isValid, touchedFields, dirtyFields },
     watch,
     getValues,
     setValue,
@@ -224,7 +224,7 @@ export const YouTubeForm = () => {
           </div>
         </div>
 
-        <button>Submit</button>
+        <button disabled={!isDirty || !isValid}>Submit</button>
         <button type="button" onClick={handleGetValues}>
           get values
         </button>
