@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 
 interface FormValues {
@@ -6,23 +6,29 @@ interface FormValues {
   email: string;
   channel: string;
   social: {
-    twitter: string,
-    facebook: string,
+    twitter: string;
+    facebook: string;
   };
-  phoneNumbers: string[];
+  phoneNumbers: {
+    number: string;
+  }[];
 }
 
 export const YouTubeForm = () => {
   const form = useForm<FormValues>({
     defaultValues: {
-        username: "john doe",
-        email: "",
-        channel: "",
-        social: {
-            twitter: "",
-            facebook: "",
+      username: "john doe",
+      email: "",
+      channel: "",
+      social: {
+        twitter: "",
+        facebook: "",
+      },
+      phoneNumbers: [
+        {
+          number: "",
         },
-        phoneNumbers: ["", ""],
+      ],
     },
     // get data from API
     // defaultValues: async () => {
@@ -38,12 +44,18 @@ export const YouTubeForm = () => {
     //   };
     // },
   });
+
   const {
     register,
     control,
     handleSubmit,
     formState: { errors },
   } = form;
+
+  const { fields, append, remove } = useFieldArray({
+    name: "phoneNumbers",
+    control: control,
+  });
 
   const onSubmit = (values: FormValues) => {
     console.log("form submitted :: ", values);
@@ -107,38 +119,43 @@ export const YouTubeForm = () => {
 
         <div className="form-control">
           <label htmlFor="twitter">twitter</label>
-          <input
-            type="text"
-            id="twitter"
-            {...register("social.twitter")}
-          />
+          <input type="text" id="twitter" {...register("social.twitter")} />
         </div>
 
         <div className="form-control">
           <label htmlFor="facebook">facebook</label>
-          <input
-            type="text"
-            id="facebook"
-            {...register("social.facebook")}
-          />
+          <input type="text" id="facebook" {...register("social.facebook")} />
         </div>
 
         <div className="form-control">
-          <label htmlFor="primaryNumber">primaryNumber</label>
-          <input
-            type="text"
-            id="primaryNumber"
-            {...register("phoneNumbers.0")}
-          />
-        </div>
-
-        <div className="form-control">
-          <label htmlFor="secondaryNumber">secondaryNumber</label>
-          <input
-            type="text"
-            id="secondaryNumber"
-            {...register("phoneNumbers.1")}
-          />
+          <label>Phone Numbers List</label>
+          <div>
+            {fields.map((field, index) => {
+              return (
+                <div key={field.id} className="form-control">
+                  <input
+                    type="text"
+                    {...register(`phoneNumbers.${index}.number`)}
+                  />
+                  {index > 0 && (
+                    <button type="button" onClick={() => remove(index)}>
+                      Remove
+                    </button>
+                  )}
+                </div>
+              );
+            })}
+            <button
+              type="button"
+              onClick={() => {
+                append({
+                  number: "",
+                });
+              }}
+            >
+              Add
+            </button>
+          </div>
         </div>
 
         <button>Submit</button>
