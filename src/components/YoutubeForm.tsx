@@ -9,6 +9,7 @@ interface FormValues {
     twitter: string,
     facebook: string,
   };
+  phoneNumbers: string[];
 }
 
 export const YouTubeForm = () => {
@@ -21,6 +22,7 @@ export const YouTubeForm = () => {
             twitter: "",
             facebook: "",
         },
+        phoneNumbers: ["", ""],
     },
     // get data from API
     // defaultValues: async () => {
@@ -118,6 +120,24 @@ export const YouTubeForm = () => {
             type="text"
             id="facebook"
             {...register("social.facebook")}
+          />
+        </div>
+
+        <div className="form-control">
+          <label htmlFor="primaryNumber">primaryNumber</label>
+          <input
+            type="text"
+            id="primaryNumber"
+            {...register("phoneNumbers.0")}
+          />
+        </div>
+
+        <div className="form-control">
+          <label htmlFor="secondaryNumber">secondaryNumber</label>
+          <input
+            type="text"
+            id="secondaryNumber"
+            {...register("phoneNumbers.1")}
           />
         </div>
 
