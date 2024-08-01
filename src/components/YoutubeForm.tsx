@@ -112,6 +112,7 @@ export const YouTubeForm = () => {
             id="username"
             {...register("username", {
               required: "username is required",
+              disabled: true,
             })}
           />
           <p className="error">{errors.username?.message}</p>
