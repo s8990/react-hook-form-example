@@ -54,7 +54,17 @@ export const YouTubeForm = () => {
     register,
     control,
     handleSubmit,
-    formState: { errors, isDirty,isValid, touchedFields, dirtyFields },
+    formState: {
+      errors,
+      isDirty,
+      isValid,
+      isSubmitting,
+      isSubmitted,
+      isSubmitSuccessful,
+      submitCount,
+      touchedFields,
+      dirtyFields,
+    },
     watch,
     getValues,
     setValue,
@@ -81,6 +91,11 @@ export const YouTubeForm = () => {
 
   //     return () => subscription.unsubscribe();
   // },[watch]);
+
+  console.log("isSubmitting :: ", isSubmitting);
+  console.log("isSubmitted :: ", isSubmitted);
+  console.log("isSubmitSuccessful :: ", isSubmitSuccessful);
+  console.log("submitCount :: ", submitCount);
 
   const handleGetValues = () => {
     console.log("getValues :: ", getValues());
@@ -116,7 +131,7 @@ export const YouTubeForm = () => {
             id="username"
             {...register("username", {
               required: "username is required",
-            //   disabled: true,
+              //   disabled: true,
             })}
           />
           <p className="error">{errors.username?.message}</p>
