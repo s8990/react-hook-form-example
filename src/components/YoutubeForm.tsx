@@ -56,6 +56,7 @@ export const YouTubeForm = () => {
     handleSubmit,
     formState: { errors },
     watch,
+    getValues,
   } = form;
 
   const { fields, append, remove } = useFieldArray({
@@ -74,7 +75,12 @@ useEffect(()=>{
     });
 
     return () => subscription.unsubscribe();
-},[watch])
+},[watch]);
+
+const handleGetValues = () => {
+    console.log("getValues :: ", getValues());
+    console.log("getValues - username :: ", getValues("username"));
+}
 
   const onSubmit = (values: FormValues) => {
     console.log("form submitted :: ", values);
@@ -193,6 +199,7 @@ useEffect(()=>{
         </div>
 
         <button>Submit</button>
+        <button type="button" onClick={handleGetValues}>get values</button>
       </form>
 
       <DevTool control={control} />
