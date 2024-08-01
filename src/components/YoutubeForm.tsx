@@ -19,6 +19,7 @@ interface FormValues {
 
 export const YouTubeForm = () => {
   const form = useForm<FormValues>({
+    mode: "onTouched", // onBlur, onChange, onSubmit, all
     defaultValues: {
       username: "john doe",
       email: "",
