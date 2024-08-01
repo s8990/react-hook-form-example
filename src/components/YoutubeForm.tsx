@@ -102,12 +102,12 @@ export const YouTubeForm = () => {
     reset();
   };
 
-  useEffect(()=>{
-    if(isSubmitSuccessful) {
-        // TODO : read more about reset method in docs
-        reset();
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      // TODO : read more about reset method in docs
+      reset();
     }
-  },[isSubmitSuccessful]);
+  }, [isSubmitSuccessful]);
 
   const handleGetValues = () => {
     console.log("getValues :: ", getValues());
@@ -165,6 +165,13 @@ export const YouTubeForm = () => {
                     !field.endsWith("example-domain.com") ||
                     "unacceptable email!"
                   );
+                },
+                emailAvailable: async (fieldValue) => {
+                  const response = await fetch(
+                    `https://jsonplaceholder.typicode.com/users?email=${fieldValue}`
+                  );
+                  const data = await response.json();
+                  return data.length === 0 || "email is exist";
                 },
               },
               pattern: {
