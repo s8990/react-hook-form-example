@@ -54,6 +54,7 @@ export const YouTubeForm = () => {
     register,
     control,
     handleSubmit,
+    reset,
     formState: {
       errors,
       isDirty,
@@ -96,6 +97,17 @@ export const YouTubeForm = () => {
   console.log("isSubmitted :: ", isSubmitted);
   console.log("isSubmitSuccessful :: ", isSubmitSuccessful);
   console.log("submitCount :: ", submitCount);
+
+  const handleResetValues = () => {
+    reset();
+  };
+
+  useEffect(()=>{
+    if(isSubmitSuccessful) {
+        // TODO : read more about reset method in docs
+        reset();
+    }
+  },[isSubmitSuccessful]);
 
   const handleGetValues = () => {
     console.log("getValues :: ", getValues());
@@ -240,6 +252,9 @@ export const YouTubeForm = () => {
         </div>
 
         <button disabled={!isDirty || !isValid}>Submit</button>
+        <button type="button" onClick={handleResetValues}>
+          reset values
+        </button>
         <button type="button" onClick={handleGetValues}>
           get values
         </button>
