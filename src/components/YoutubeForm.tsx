@@ -84,7 +84,11 @@ const handleGetValues = () => {
 };
 
 const handleSetValue = () => {
-    setValue("username", "");
+    setValue("username", "", {
+        shouldDirty: true,
+        shouldTouch: true,
+        shouldValidate: true,
+    });
 };
 
   const onSubmit = (values: FormValues) => {
