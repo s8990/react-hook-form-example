@@ -54,7 +54,7 @@ export const YouTubeForm = () => {
     register,
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty, touchedFields, dirtyFields },
     watch,
     getValues,
     setValue,
@@ -65,31 +65,35 @@ export const YouTubeForm = () => {
     control: control,
   });
 
-//   const watchFields = watch(["username", "email"]);
-// const watchFields = watch();
+  console.log("touchedFields :: ", touchedFields);
+  console.log("dirtyFields :: ", dirtyFields);
+  console.log("isDirty :: ", isDirty);
 
-console.log("re-render")
+  //   const watchFields = watch(["username", "email"]);
+  // const watchFields = watch();
 
-useEffect(()=>{
-    const subscription = watch((value)=> {
-        console.log("value :: ", value)
-    });
+  // console.log("re-render")
 
-    return () => subscription.unsubscribe();
-},[watch]);
+  // useEffect(()=>{
+  //     const subscription = watch((value)=> {
+  //         console.log("value :: ", value)
+  //     });
 
-const handleGetValues = () => {
+  //     return () => subscription.unsubscribe();
+  // },[watch]);
+
+  const handleGetValues = () => {
     console.log("getValues :: ", getValues());
     console.log("getValues - username :: ", getValues("username"));
-};
+  };
 
-const handleSetValue = () => {
+  const handleSetValue = () => {
     setValue("username", "", {
-        shouldDirty: true,
-        shouldTouch: true,
-        shouldValidate: true,
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
     });
-};
+  };
 
   const onSubmit = (values: FormValues) => {
     console.log("form submitted :: ", values);
@@ -154,16 +158,24 @@ const handleSetValue = () => {
 
         <div className="form-control">
           <label htmlFor="age">age</label>
-          <input type="text" id="age" {...register("age", {
-            valueAsNumber: true,
-          })} />
+          <input
+            type="text"
+            id="age"
+            {...register("age", {
+              valueAsNumber: true,
+            })}
+          />
         </div>
 
         <div className="form-control">
           <label htmlFor="dob">dob</label>
-          <input type="date" id="dob" {...register("dob", {
-            valueAsDate: true,
-          })} />
+          <input
+            type="date"
+            id="dob"
+            {...register("dob", {
+              valueAsDate: true,
+            })}
+          />
         </div>
 
         <div className="form-control">
@@ -208,8 +220,12 @@ const handleSetValue = () => {
         </div>
 
         <button>Submit</button>
-        <button type="button" onClick={handleGetValues}>get values</button>
-        <button type="button" onClick={handleSetValue}>set value</button>
+        <button type="button" onClick={handleGetValues}>
+          get values
+        </button>
+        <button type="button" onClick={handleSetValue}>
+          set value
+        </button>
       </form>
 
       <DevTool control={control} />
